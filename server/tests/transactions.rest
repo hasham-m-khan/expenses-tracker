@@ -1,0 +1,44 @@
+### Auth - Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### GET all transactions
+GET http://localhost:3000/api/v1/transactions
+
+### GET a transaction - if transaction is found
+GET http://localhost:3000/api/v1/transactions/4
+
+### GET a transaction - if transaction is NOT found
+GET http://localhost:3000/api/v1/transactions/99
+
+### GET transactions - Total expenditure
+GET http://localhost:3000/api/v1/transactions/total-spent
+
+### GET transactions - Total Earned
+GET http://localhost:3000/api/v1/transactions/total-earned
+
+### GET transactions - Overall Status
+GET http://localhost:3000/api/v1/transactions/overall-status
+
+### POST Request
+POST http://localhost:3000/api/v1/transactions
+Content-Type: application/json
+
+  { 
+    "date": "2026-03-22", 
+    "title": "School trip for son", 
+    "amount": 45.99, 
+    "type": "expense",
+    "categories": [
+      { "id": 2, "name": "school" },
+      { "id": 4, "name": "home" }
+    ]
+  }
+
+### DELETE a transaction - if transaction is NOT found
+DELETE http://localhost:3000/api/v1/transactions/3

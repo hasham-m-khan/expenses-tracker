@@ -1,0 +1,35 @@
+### GET all categories
+GET http://localhost:3000/api/v1/categories
+
+
+### GET a category - if category is found
+GET http://localhost:3000/api/v1/categories/4
+
+
+### GET a category - if category is NOT found
+GET http://localhost:3000/api/v1/categories/99
+
+
+### POST Request - Multiple categories request
+POST http://localhost:3000/api/v1/categories
+Content-Type: application/json
+
+  { 
+    "categories": ["test", "sports", "computer", "household"]
+  }
+
+
+### POST Request - Only one category request
+POST http://localhost:3000/api/v1/categories
+Content-Type: application/json
+
+  { 
+    "categories": ["apple"]
+  }
+
+
+### DELETE a category - if category is found
+DELETE http://localhost:3000/api/v1/categories/5
+
+### DELETE a category - if category is NOT found
+DELETE http://localhost:3000/api/v1/categories/99
