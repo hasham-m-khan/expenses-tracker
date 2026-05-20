@@ -40,3 +40,6 @@ frontend/*
 # Random folders
 folders.txt
 backend.txt
+
+#FUSE temporary filess
+.fuse_hidden*
