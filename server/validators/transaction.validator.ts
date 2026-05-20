@@ -1,12 +1,12 @@
-import { z } from 'zod';
-import { CategorySchema } from './category.validator';
+import { z } from "zod";
+import { CategorySchema } from "./category.validator";
 
 export const TransactionSchema = z.object({
   id: z.number().int().positive().min(1),
   date: z.iso.date(),
   title: z.string().min(3).max(128),
-  amount: z.number(),
-  type: z.literal(['expense', 'earning']),
+  amount: z.string(),
+  type: z.literal(["expense", "earning"]),
   categories: z.array(CategorySchema),
 });
 
