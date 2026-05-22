@@ -44,7 +44,7 @@ const authRoutes = new Hono<AppContext>()
       path: "/",
     });
 
-    return c.json(createApiResponse(null, "login successful"));
+    return c.json(createApiResponse(user, "login successful"));
   })
 
   .post("/logout", async (c) => {
