@@ -3,6 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { ZodError } from "zod";
 import { EntityNotFoundException } from "../exceptions/entity-not-found.exception";
 import { DuplicateUserFound } from "../exceptions/duplicate-user.exception";
+import { InvalidCredentialsException } from "../exceptions/invalid-credentials.exception";
 
 export function errorHandler(err: Error, c: Context) {
   if (err instanceof EntityNotFoundException) {
@@ -34,6 +35,22 @@ export function errorHandler(err: Error, c: Context) {
         },
       },
       409,
+    );
+  }
+
+  if (err instanceof InvalidCredentialsException) {
+    return c.json(
+      {
+        success: false,
+        message: err.message,
+        data: [],
+        metadata: {
+          timestamp: new Date().toISOString(),
+          status: 400,
+          error: "validation error",
+        },
+      },
+      400,
     );
   }
 
