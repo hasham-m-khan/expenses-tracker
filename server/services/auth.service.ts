@@ -1,3 +1,4 @@
+import md5 from "md5";
 import { hash, verify } from "@node-rs/argon2";
 import { generateRandomString, alphabet } from "oslo/crypto";
 import * as sessionsRepo from "../repositories/sessions.repository";
@@ -69,7 +70,14 @@ export async function registerUser(
   if (existing) throw new DuplicateUserFound("Email is already registered");
 
   const passwordHash = await hashPassword(password);
-  return usersRepo.insertUser(email, passwordHash, firstName, lastName);
+  const gravatarUrl = getGravatarUrl(email.trim().toLowerCase(), 200);
+  return usersRepo.insertUser(
+    email,
+    passwordHash,
+    firstName,
+    lastName,
+    gravatarUrl,
+  );
 }
 
 export async function loginUser(email: string, password: string) {
@@ -80,4 +88,10 @@ export async function loginUser(email: string, password: string) {
   if (!validPassword) throw new InvalidCredentialsException("password");
 
   return user;
+}
+
+// -- Helper functions ---------------------------------------------------------
+export function getGravatarUrl(email: string, size = 80) {
+  const hash = md5(email.trim().toLowerCase());
+  return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
