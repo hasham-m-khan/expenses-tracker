@@ -16,9 +16,10 @@ export async function insertUser(
   passwordHash: string,
   firstName: string,
   lastName: string,
+  avatarUrl: string,
 ) {
   const [{ insertId }] = await db
     .insert(users)
-    .values({ email, passwordHash, firstName, lastName });
+    .values({ email, passwordHash, firstName, lastName, avatarUrl });
   return insertId;
 }
