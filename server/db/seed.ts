@@ -7,18 +7,33 @@ import {
   transactionsCategories,
 } from "./schema";
 import { hashPassword } from "../services/auth.service";
+import { getGravatarUrl } from "../utils/gravatar";
 
 async function seed() {
   console.log("🌱 Seeding database...");
 
   // 1. Users
-  const [{ insertId: userId }] = await db.insert(users).values({
-    email: "test@example.com",
+  const adminEmail = "admin@example.com";
+  const [{ insertId: userIdAdmin }] = await db.insert(users).values({
+    email: adminEmail,
     passwordHash: await hashPassword("password123"),
     firstName: "John",
     lastName: "Doe",
+    role: "admin",
+    avatarUrl: getGravatarUrl(adminEmail, 200),
   });
-  console.log("✓ Users inserted");
+  console.log("✓ Admin users inserted");
+
+  const userEmail = "user@example.com";
+  const [{ insertId: userIdUser }] = await db.insert(users).values({
+    email: userEmail,
+    passwordHash: await hashPassword("password123"),
+    firstName: "John",
+    lastName: "Doe",
+    role: "user",
+    avatarUrl: getGravatarUrl(userEmail, 200),
+  });
+  console.log("✓ Normal users inserted");
 
   // 2. Categories
   await db
@@ -44,70 +59,70 @@ async function seed() {
   // 3. Transactions
   await db.insert(transactions).values([
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-09"),
       title: "Buy cake for birthday",
       amount: "24.99",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-01"),
       title: "Weekly grocery run",
       amount: "87.5",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-02"),
       title: "Textbooks for next semester",
       amount: "145.0",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-03"),
       title: "Sold old textbook to classmate",
       amount: "40.0",
       type: "earning",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-04"),
       title: "Notebooks and highlighters",
       amount: "12.3",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-05"),
       title: "Movie night with friends",
       amount: "18.5",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-06"),
       title: "Weekly subway pass",
       amount: "32.0",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-07"),
       title: "Freelance design project payout",
       amount: "450.0",
       type: "earning",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-08"),
       title: "Housewarming gift for Sarah",
       amount: "35.0",
       type: "expense",
     },
     {
-      userId,
+      userId: userIdUser,
       date: new Date("2026-05-10"),
       title: "Sold handmade pottery craft",
       amount: "65.0",

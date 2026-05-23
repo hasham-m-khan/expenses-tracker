@@ -1,10 +1,10 @@
-import md5 from "md5";
 import { hash, verify } from "@node-rs/argon2";
 import { generateRandomString, alphabet } from "oslo/crypto";
 import * as sessionsRepo from "../repositories/sessions.repository";
 import * as usersRepo from "../repositories/users.repository";
 import { DuplicateUserFound } from "../exceptions/duplicate-user.exception";
 import { InvalidCredentialsException } from "../exceptions/invalid-credentials.exception";
+import { getGravatarUrl } from "../utils/gravatar";
 
 const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 30; // 30 days
 
@@ -88,10 +88,4 @@ export async function loginUser(email: string, password: string) {
   if (!validPassword) throw new InvalidCredentialsException("password");
 
   return user;
-}
-
-// -- Helper functions ---------------------------------------------------------
-export function getGravatarUrl(email: string, size = 80) {
-  const hash = md5(email.trim().toLowerCase());
-  return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
