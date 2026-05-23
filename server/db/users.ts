@@ -7,5 +7,12 @@ export const users = mysqlTable("users", {
   passwordHash: varchar({ length: 255 }).notNull(),
   firstName: varchar({ length: 255 }).notNull(),
   lastName: varchar({ length: 255 }).notNull(),
+  avatarUrl: varchar({ length: 512 }),
+  role: varchar({
+    length: 10,
+    enum: ["admin", "staff", "user"],
+  })
+    .notNull()
+    .default("user"),
   ...timestamps,
 });
